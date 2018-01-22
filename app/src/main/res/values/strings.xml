@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MVPArchitecture</string>
+    <string name="login_name">UserName</string>
+    <string name="limit">Limit</string>
+    <string name="search">Search</string>
+    <string name="id">Id</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
