@@ -1,13 +1,9 @@
-package com.example.nguye.mvparchitecture.model;
-
-/**
- * Created by nguye on 21/01/2018.
- */
+package com.example.nguye.mvparchitecture.data;
 
 import java.io.Serializable;
 
 /**
- * Created by nguye on 16/01/2018.
+ * Created by nguye on 22/01/2018.
  */
 
 public class User implements Serializable {

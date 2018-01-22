@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.nguye.mvparchitecture.R;
-import com.example.nguye.mvparchitecture.model.User;
-import com.example.nguye.mvparchitecture.searchuser.ListUserView;
+import com.example.nguye.mvparchitecture.data.User;
+import com.example.nguye.mvparchitecture.searchuser.IClick;
 
 import java.util.List;
 
@@ -21,12 +21,12 @@ public class UserAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private List<User> mUsers;
-    private ListUserView mListUserView;
+    private IClick mIClick;
 
     public UserAdapter(Context context, List<User> users) {
-        this.mContext = context;
-        this.mUsers = users;
-        mListUserView = (ListUserView) mContext;
+        mContext = context;
+        mUsers = users;
+        mIClick = (IClick) context;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UserAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 int position = Integer.valueOf(v.getTag().toString());
-                mListUserView.recyclerItemClick(position);
+                mIClick.recyclerItemClick(mUsers.get(position));
             }
         });
     }

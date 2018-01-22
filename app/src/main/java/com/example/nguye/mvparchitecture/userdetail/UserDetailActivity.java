@@ -1,5 +1,6 @@
 package com.example.nguye.mvparchitecture.userdetail;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -9,17 +10,16 @@ import android.widget.TextView;
 
 import com.example.nguye.mvparchitecture.Constant;
 import com.example.nguye.mvparchitecture.R;
-import com.example.nguye.mvparchitecture.model.User;
+import com.example.nguye.mvparchitecture.data.User;
 import com.example.nguye.mvparchitecture.model.UserHelper;
 
-public class UserDetailActivity extends AppCompatActivity implements UserDetailView {
+public class UserDetailActivity extends AppCompatActivity implements UserDetailContract.View {
 
     private TextView mTextViewLogin;
     private TextView mTextViewUrl;
     private ImageView mImageViewAvatar;
-
-    private UserDetailPresenterImpl mUserDetailPresenter;
-    private UserHelper mUserHelper;
+    private UserDetailContract.Presenter mPresenter;
+    private ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,9 @@ public class UserDetailActivity extends AppCompatActivity implements UserDetailV
         mTextViewLogin = findViewById(R.id.text_view_login);
         mTextViewUrl = findViewById(R.id.text_view_url);
         mImageViewAvatar = findViewById(R.id.image_avatar);
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage(getString(R.string.loading));
+        mPresenter = new UserDetailPresenter(this);
         getData();
     }
 
@@ -37,13 +40,36 @@ public class UserDetailActivity extends AppCompatActivity implements UserDetailV
         User user = (User) bundle.getSerializable(Constant.EXTRA_USERS);
         mTextViewLogin.setText(user.getLogin());
         mTextViewUrl.setText(user.getUrlGithub());
-        mUserHelper = new UserHelper(this);
-        mUserDetailPresenter = new UserDetailPresenterImpl(this, mUserHelper);
-        mUserDetailPresenter.getBimap(user.getUrlAvatar());
+        mPresenter.getBitmap(user.getUrlAvatar());
     }
 
     @Override
-    public void displayImage(Bitmap bitmap) {
+    public void setImage(Bitmap bitmap) {
         mImageViewAvatar.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void onNoData() {
+
+    }
+
+    @Override
+    public void showDiaLog() {
+        mDialog.show();
+    }
+
+    @Override
+    public void dismissDialog() {
+        mDialog.dismiss();
+    }
+
+    @Override
+    public void setPresenter(UserDetailContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }
