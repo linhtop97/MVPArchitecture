@@ -2,7 +2,9 @@ package com.example.nguye.mvparchitecture.searchuser;
 
 import com.example.nguye.mvparchitecture.Constant;
 import com.example.nguye.mvparchitecture.data.User;
-import com.example.nguye.mvparchitecture.data.resource.remote.UserDAO;
+import com.example.nguye.mvparchitecture.data.resource.UsersDataSource;
+import com.example.nguye.mvparchitecture.data.resource.UsersRepository;
+import com.example.nguye.mvparchitecture.data.resource.nothing.UserDAO;
 
 import java.util.List;
 
@@ -11,25 +13,40 @@ import java.util.List;
  */
 
 public class SearchUserPresenter implements SearchUserContract.Presenter {
-    private UserDAO mUserDAO;
-
+    private final UsersRepository mUsersRepository;
     private final SearchUserContract.View mView;
 
-    public SearchUserPresenter(SearchUserContract.View view){
+    public SearchUserPresenter(UsersRepository usersRepository, SearchUserContract.View view){
         mView = view;
+        mUsersRepository = usersRepository;
         mView.setPresenter(this);
-        mUserDAO = new UserDAO(this);
     }
 
-    public void getUserList(String loginName, int limit){
+    public void getUserList(){
         mView.showDiaLog();
-        mUserDAO.getUserList(Constant.LINK_USER + limit + Constant.LOGIN_NAME + loginName);
+        mUsersRepository.getUsers(new UsersDataSource.LoadUsersCallback() {
+            @Override
+            public void onUsersLoaded(List<User> users) {
+                mView.onLoadUserSuccess(users);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                mView.onNoData();
+            }
+        });
+       // mUserDAO.getUserList(Constant.LINK_USER + limit + Constant.LOGIN_NAME + loginName);
+    }
+
+    @Override
+    public void getUserList(String loginName, int limit) {
+
     }
 
     @Override
     public void getUserListSuccess(List<User> users) {
-        mView.dismissDialog();
-        mView.onLoadUserSuccess(users);
+//        mView.dismissDialog();
+//        mView.onLoadUserSuccess(users);
     }
 
     @Override
@@ -39,6 +56,6 @@ public class SearchUserPresenter implements SearchUserContract.Presenter {
 
     @Override
     public void start() {
-
+        getUserList();
     }
 }

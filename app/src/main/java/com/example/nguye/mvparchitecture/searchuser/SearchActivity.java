@@ -52,27 +52,27 @@ public class SearchActivity extends AppCompatActivity implements SearchUserContr
         edtLogin = findViewById(R.id.edt_login);
         edtLimit = findViewById(R.id.edt_limit_number);
         btnSearch = findViewById(R.id.button_search);
-        mPresenter = new SearchUserPresenter(this);
+       // mPresenter = new SearchUserPresenter();
         mDialog = new ProgressDialog(this);
         mDialog.setMessage(getString(R.string.searching));
     }
 
     @Override
     public void recyclerItemClick(User user) {
-        Intent intent = new Intent(SearchActivity.this, UserDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.EXTRA_USERS, user);
-        intent.putExtra(Constant.EXTRA_USERS, bundle);
-        startActivity(intent);
+//        Intent intent = new Intent(SearchActivity.this, UserDetailActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(Constant.EXTRA_USERS, user);
+//        intent.putExtra(Constant.EXTRA_USERS, bundle);
+//        startActivity(intent);
     }
 
     @Override
     public void onLoadUserSuccess(List<User> userList) {
-        mDialog.dismiss();
-        mRecyclerView = findViewById(R.id.rv_user_list);
-        UserAdapter adapter = new UserAdapter(this, userList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(adapter);
+//        mDialog.dismiss();
+//        mRecyclerView = findViewById(R.id.rv_user_list);
+//        UserAdapter adapter = new UserAdapter(this, userList);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        mRecyclerView.setAdapter(adapter);
     }
 
     @Override

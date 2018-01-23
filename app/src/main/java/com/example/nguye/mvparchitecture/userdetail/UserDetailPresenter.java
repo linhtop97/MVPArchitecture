@@ -3,7 +3,7 @@ package com.example.nguye.mvparchitecture.userdetail;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.example.nguye.mvparchitecture.data.resource.remote.UserDetailDAO;
+import com.example.nguye.mvparchitecture.data.resource.nothing.UserDetailDAO;
 
 /**
  * Created by nguye on 22/01/2018.

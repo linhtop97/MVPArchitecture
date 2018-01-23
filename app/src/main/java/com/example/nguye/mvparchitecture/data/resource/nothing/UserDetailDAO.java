@@ -1,10 +1,9 @@
-package com.example.nguye.mvparchitecture.data.resource.remote;
+package com.example.nguye.mvparchitecture.data.resource.nothing;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
-import com.example.nguye.mvparchitecture.userdetail.UserDetailContract;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -14,11 +13,9 @@ import com.squareup.picasso.Target;
 
 public class UserDetailDAO {
     private Context mContext;
-    private UserDetailContract.Presenter mPresenter;
     private Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            mPresenter.getBitmapSuccess(bitmap);
         }
 
         @Override
@@ -30,9 +27,8 @@ public class UserDetailDAO {
         }
     };
 
-    public UserDetailDAO(Context context, UserDetailContract.Presenter presenter) {
+    public UserDetailDAO(Context context) {
         mContext = context;
-        mPresenter = presenter;
     }
 
     public void getBitmap(String url) {
