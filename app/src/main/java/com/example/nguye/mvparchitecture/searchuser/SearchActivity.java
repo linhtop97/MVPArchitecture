@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,13 +21,13 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements SearchUserContract.View, IClick {
 
-    public static final String TAG = "SearchUserActivity";
-    private EditText edtLogin;
-    private EditText edtLimit;
-    private Button btnSearch;
+    public static final String TAG = "SearchActivity";
+    private EditText mEdtLogin;
+    private EditText mEdtlimit;
+    private Button mBtnSearch;
     private RecyclerView mRecyclerView;
     private ProgressDialog mDialog;
-    private UserAdapter adapter;
+    private UserAdapter mUserAdapter;
     private List<User> mUsers;
     private SearchUserContract.Presenter mPresenter;
 
@@ -41,11 +40,11 @@ public class SearchActivity extends AppCompatActivity implements SearchUserContr
     }
 
     private void events() {
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        mBtnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String loginName = edtLogin.getText().toString().trim();
-                String limit = edtLimit.getText().toString().trim();
+                String loginName = mEdtLogin.getText().toString().trim();
+                String limit = mEdtlimit.getText().toString().trim();
                 if (loginName.isEmpty() || limit.isEmpty()) return;
                 mPresenter.getUserList(loginName, Integer.parseInt(limit));
             }
@@ -53,9 +52,9 @@ public class SearchActivity extends AppCompatActivity implements SearchUserContr
     }
 
     private void initView() {
-        edtLogin = findViewById(R.id.edt_login);
-        edtLimit = findViewById(R.id.edt_limit_number);
-        btnSearch = findViewById(R.id.button_search);
+        mEdtLogin = findViewById(R.id.edt_login);
+        mEdtlimit = findViewById(R.id.edt_limit_number);
+        mBtnSearch = findViewById(R.id.button_search);
         mPresenter = new SearchUserPresenter(this);
         mDialog = new ProgressDialog(this);
         mDialog.setMessage(getString(R.string.searching));
@@ -75,18 +74,17 @@ public class SearchActivity extends AppCompatActivity implements SearchUserContr
         mDialog.dismiss();
         mRecyclerView = findViewById(R.id.rv_user_list);
         mUsers = userList;
-        adapter = new UserAdapter(this, mUsers);
+        mUserAdapter = new UserAdapter(this, mUsers);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mUserAdapter);
     }
 
     @Override
     public void onNoData() {
         if (mUsers != null) {
             mUsers.clear();
-            adapter.notifyDataSetChanged();
+            mUserAdapter.notifyDataSetChanged();
         }
-        Log.d(TAG, "ko tim thay");
         Toast.makeText(this, "Không tìm thấy user này!", Toast.LENGTH_SHORT).show();
     }
 
