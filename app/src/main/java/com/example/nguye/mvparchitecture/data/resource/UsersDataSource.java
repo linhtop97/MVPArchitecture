@@ -1,6 +1,6 @@
 package com.example.nguye.mvparchitecture.data.resource;
 
-import android.support.annotation.NonNull;
+import android.graphics.Bitmap;
 
 import com.example.nguye.mvparchitecture.data.User;
 
@@ -11,6 +11,10 @@ import java.util.List;
  */
 
 public interface UsersDataSource {
+    void getUsers(String url, LoadUsersCallback callback);
+
+    void getBitmap(String urlImage, LoadImageCallback callback);
+
     interface LoadUsersCallback {
 
         void onUsersLoaded(List<User> users);
@@ -18,14 +22,11 @@ public interface UsersDataSource {
         void onDataNotAvailable();
     }
 
-    interface GetUserCallback {
+    interface LoadImageCallback {
 
-        void onTaskLoaded(User user);
+        void onBitmapLoaded(Bitmap bitmap);
 
         void onDataNotAvailable();
     }
 
-    void getUsers(String url, @NonNull LoadUsersCallback callback);
-
-    void getUser(@NonNull String userId, @NonNull GetUserCallback callback);
 }

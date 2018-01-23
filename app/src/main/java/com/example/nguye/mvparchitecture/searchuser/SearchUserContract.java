@@ -14,8 +14,6 @@ public interface SearchUserContract {
     interface View extends BaseView<Presenter>{
         void onLoadUserSuccess(List<User> userList);
 
-        void onError();
-
         void onNoData();
 
         void showDiaLog();
@@ -25,9 +23,5 @@ public interface SearchUserContract {
 
     interface Presenter extends BasePresenter{
         void getUserList(String loginName, int limit);
-
-        void getUserListSuccess(List<User> users);
-
-        void onNoData();
     }
 }

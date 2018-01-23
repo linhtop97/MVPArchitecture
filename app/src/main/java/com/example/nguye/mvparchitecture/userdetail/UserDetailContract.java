@@ -13,8 +13,6 @@ public interface UserDetailContract {
     interface View extends BaseView<Presenter> {
         void setImage(Bitmap bitmap);
 
-        void onError();
-
         void onNoData();
 
         void showDiaLog();
@@ -24,9 +22,5 @@ public interface UserDetailContract {
 
     interface Presenter extends BasePresenter {
         void getBitmap(String url);
-
-        void getBitmapSuccess(Bitmap bitmap);
-
-        void onNoData();
     }
 }

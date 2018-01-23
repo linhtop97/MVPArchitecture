@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.nguye.mvparchitecture.Constant;
 import com.example.nguye.mvparchitecture.data.User;
+import com.example.nguye.mvparchitecture.data.resource.UsersDataSource;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +25,11 @@ import java.util.List;
 
 public class FetchDataFromUrl extends AsyncTask<String, Void, String> {
 
+    private UsersDataSource.LoadUsersCallback mCallback;
+
+    public FetchDataFromUrl(UsersDataSource.LoadUsersCallback callback) {
+        mCallback = callback;
+    }
 
     @Override
     protected String doInBackground(String... strings) {
@@ -34,6 +40,11 @@ public class FetchDataFromUrl extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String json) {
         super.onPostExecute(json);
+        if (json == null) {
+            mCallback.onDataNotAvailable();
+            return;
+        }
+        mCallback.onUsersLoaded(getUserFromJSONString(json));
     }
 
     private List<User> getUserFromJSONString(String json) {

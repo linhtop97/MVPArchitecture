@@ -1,24 +1,23 @@
 package com.example.nguye.mvparchitecture.userdetail;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.example.nguye.mvparchitecture.data.resource.nothing.UserDetailDAO;
+import com.example.nguye.mvparchitecture.data.resource.UsersDataSource;
+import com.example.nguye.mvparchitecture.data.resource.remote.UsersRemoteDataSource;
 
 /**
  * Created by nguye on 22/01/2018.
  */
 
-public class UserDetailPresenter implements UserDetailContract.Presenter {
+public class UserDetailPresenter implements UserDetailContract.Presenter, UsersDataSource.LoadImageCallback {
 
     private UserDetailContract.View mView;
-    private UserDetailDAO mUserDetailDAO;
+    private UsersRemoteDataSource mUsersRemoteDataSource;
 
     public UserDetailPresenter(UserDetailContract.View view) {
         mView = view;
         mView.setPresenter(this);
-        mUserDetailDAO = new UserDetailDAO((Context) view, this);
-
+        mUsersRemoteDataSource = new UsersRemoteDataSource();
     }
 
     @Override
@@ -29,17 +28,18 @@ public class UserDetailPresenter implements UserDetailContract.Presenter {
     @Override
     public void getBitmap(String url) {
         mView.showDiaLog();
-        mUserDetailDAO.getBitmap(url);
+        mUsersRemoteDataSource.getBitmap(url, this);
     }
 
     @Override
-    public void getBitmapSuccess(Bitmap bitmap) {
+    public void onBitmapLoaded(Bitmap bitmap) {
         mView.dismissDialog();
         mView.setImage(bitmap);
     }
 
     @Override
-    public void onNoData() {
-
+    public void onDataNotAvailable() {
+        mView.dismissDialog();
+        mView.onNoData();
     }
 }

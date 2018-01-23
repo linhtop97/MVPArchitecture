@@ -10,25 +10,14 @@ import com.example.nguye.mvparchitecture.data.resource.UsersDataSource;
 
 public class UsersRemoteDataSource implements UsersDataSource {
 
-    private static volatile UsersRemoteDataSource _instance;
-
-    public static UsersRemoteDataSource getInstance() {
-        if (_instance == null) {
-            _instance = new UsersRemoteDataSource();
-        }
-        return _instance;
+    @Override
+    public void getUsers(String url, LoadUsersCallback callback) {
+        new FetchDataFromUrl(callback).execute(url);
     }
 
     @Override
-    public void getUsers(String url, @NonNull LoadUsersCallback callback) {
-        new FetchDataFromUrl().execute(
-
-        );
-        callback.onUsersLoaded();
+    public void getBitmap(String urlImage, LoadImageCallback callback) {
+        new FetchBitmapFromUrl(callback).execute(urlImage);
     }
 
-    @Override
-    public void getUser(@NonNull String userId, @NonNull GetUserCallback callback) {
-
-    }
 }

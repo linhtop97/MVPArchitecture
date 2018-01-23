@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nguye.mvparchitecture.Constant;
 import com.example.nguye.mvparchitecture.R;
 import com.example.nguye.mvparchitecture.data.User;
-import com.example.nguye.mvparchitecture.model.UserHelper;
 
 public class UserDetailActivity extends AppCompatActivity implements UserDetailContract.View {
 
@@ -49,13 +49,8 @@ public class UserDetailActivity extends AppCompatActivity implements UserDetailC
     }
 
     @Override
-    public void onError() {
-
-    }
-
-    @Override
     public void onNoData() {
-
+        Toast.makeText(this, "...", Toast.LENGTH_SHORT).show();
     }
 
     @Override
